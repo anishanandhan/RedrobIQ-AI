@@ -10,3 +10,8 @@ exclude_lines = [
     "raise NotImplementedError",
     "except Exception"
 ]
+
+[tool.mypy]
+exclude = "(?x)(hf_space/|.*PUB.*)"
+
+

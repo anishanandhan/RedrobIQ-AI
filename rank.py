@@ -30,20 +30,51 @@ def main():
 
     try:
         with open(args.candidates, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
+            # Peek at the first character to determine format
+            first_char = ""
+            for char in f.read(100):
+                if not char.isspace():
+                    first_char = char
+                    break
+            f.seek(0)
+            
+            if first_char == "[":
+                # Parse as a single JSON array
                 try:
-                    candidate = json.loads(line)
-                    score, breakdown = score_candidate(candidate)
-                    scored.append((score, candidate, breakdown))
-                    count += 1
-                    if count % 10000 == 0:
-                        print(f"  Processed {count:,} candidates...")
+                    candidates = json.load(f)
+                    if isinstance(candidates, list):
+                        for candidate in candidates:
+                            try:
+                                score, breakdown = score_candidate(candidate)
+                                scored.append((score, candidate, breakdown))
+                                count += 1
+                            except Exception:
+                                errors += 1
+                    else:
+                        try:
+                            score, breakdown = score_candidate(candidates)
+                            scored.append((score, candidates, breakdown))
+                            count += 1
+                        except Exception:
+                            errors += 1
                 except Exception:
-                    errors += 1
-                    continue
+                    errors = 1 # file-level parse failure
+            else:
+                # Parse line-by-line (JSONL)
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        candidate = json.loads(line)
+                        score, breakdown = score_candidate(candidate)
+                        scored.append((score, candidate, breakdown))
+                        count += 1
+                        if count % 10000 == 0:
+                            print(f"  Processed {count:,} candidates...")
+                    except Exception:
+                        errors += 1
+                        continue
     except FileNotFoundError:
         print(f"Error: Candidate file not found at '{args.candidates}'")
         sys.exit(1)
