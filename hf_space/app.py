@@ -263,8 +263,19 @@ def score_candidates_df(candidates):
                 "reasoning": reasoning
             })
             
-    df_results = pd.DataFrame(results).sort_values(by=["score", "candidate_id"], ascending=[False, True])
-    df_honeypots = pd.DataFrame(honeypots)
+    if results:
+        df_results = pd.DataFrame(results).sort_values(by=["score", "candidate_id"], ascending=[False, True])
+    else:
+        df_results = pd.DataFrame(columns=[
+            "candidate_id", "name", "score", "skill_score", "career_score",
+            "behavioral_score", "yoe", "location", "notice_period", "reasoning"
+        ])
+        
+    if honeypots:
+        df_honeypots = pd.DataFrame(honeypots)
+    else:
+        df_honeypots = pd.DataFrame(columns=["candidate_id", "name", "yoe", "location", "reason"])
+        
     return df_results, df_honeypots
 
 df_ranks, df_hps = score_candidates_df(candidates_list)
