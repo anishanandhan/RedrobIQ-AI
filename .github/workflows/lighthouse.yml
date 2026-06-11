@@ -1,0 +1,21 @@
+name: Performance & Accessibility Audit
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Lighthouse Audit on Deployed Sandbox
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://huggingface.co/spaces/anishanandhan/RedrObIQ
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

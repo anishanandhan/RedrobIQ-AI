@@ -1,0 +1,15 @@
+# python env and build artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+venv/
+.DS_Store
+
+# large dataset and other projects
+*India_runs_data_and_ai_challenge/
+*voidhack/
+~$*

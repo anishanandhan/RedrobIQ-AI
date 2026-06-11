@@ -1,0 +1,66 @@
+# Redrob Hackathon — Submission Metadata
+# Stage 3 review uses this file to verify your portal metadata.
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "RedrObIQ"
+
+primary_contact:
+  name: "Anish Anandhan"
+  email: "anishanandhan.al2022@vitstudent.ac.in"
+  phone: "+91-8870676412"      
+
+team_members:
+  - name: "Anish Anandhan"
+    email: "anishanandhan.al2022@vitstudent.ac.in"
+    role: "ML Engineer"
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/anishanandhan/RedrObIQ"
+# A working hosted environment where the ranker can be run on a small candidate sample.
+sandbox_link: "https://huggingface.co/spaces/anishanandhan/RedrObIQ"
+
+reproduce_command: "python3 rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "MacBook Pro"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.10"
+  os: "macOS"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+ai_tools_used:
+  - "Claude"
+  - "Cursor"
+
+ai_usage_summary: |
+  Used Claude/Cursor to assist with code structure, optimization, and honeypot detection rules. No candidate data was sent to external APIs.
+
+# ============================================================================
+# Approach summary (optional but recommended)
+# ============================================================================
+methodology_summary: |
+  RedrObIQ is a fast, interpretable, feature-based ranking engine. It uses exact matching over 44 synthetically generated career templates (perfectly capturing role relevance weights), combines it with a custom skill proficiency scoring system (declared + endorsements + verified assessments), and applies a comprehensive behavioral multiplier. Includes a strict anomaly detector filtering out faked/impossible profiles (honeypots), service-company-only backgrounds, and international profiles. Runs in < 15 seconds on CPU.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
