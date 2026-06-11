@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import json
 import plotly.express as px
+import textwrap
 from app.services.scoring import score_candidate
 from app.services.reasoning import generate_reasoning
 from app.services.honeypot import detect_honeypot
@@ -175,12 +176,12 @@ st.markdown(f"""
 
 # 4. Helpers for Visual Components
 def metric_card(label, value):
-    st.markdown(f"""
+    st.markdown(textwrap.dedent(f"""
     <div class="metric-card">
         <div class="metric-label">{label}</div>
         <div class="metric-value">{value}</div>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
 PLOT_LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
@@ -202,11 +203,11 @@ PLOT_LAYOUT = dict(
 # 5. Header Component
 head_left, head_right = st.columns([8, 1.2])
 with head_left:
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="brand">
         <span class="brand-name">◆ RedrObIQ Candidate Ranker</span>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 with head_right:
     theme_label = "☀️ Light Mode" if IS_DARK else "🌙 Dark Mode"
     st.button(theme_label, on_click=toggle_theme, use_container_width=True)
@@ -317,7 +318,7 @@ with tab_shortlist:
         </tr>
         """
     
-    st.markdown(f"""
+    st.markdown(textwrap.dedent(f"""
     <div style="overflow-x:auto;">
     <table class="data-table">
         <thead>
@@ -336,7 +337,7 @@ with tab_shortlist:
         </tbody>
     </table>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
 # --- Tab 2: Visual Analytics ---
 with tab_charts:
@@ -409,7 +410,7 @@ with tab_honeypots:
             </tr>
             """
         
-        st.markdown(f"""
+        st.markdown(textwrap.dedent(f"""
         <table class="data-table">
             <thead>
                 <tr>
@@ -424,7 +425,7 @@ with tab_honeypots:
                 {hp_rows}
             </tbody>
         </table>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
     else:
         st.info("No honeypots detected in the loaded dataset.")
 
